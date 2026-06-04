@@ -38,13 +38,13 @@
 | U-IN-06 | 비제로 중복 (TL-03) | E004 / INVALID_DUPLICATE | E004 |
 | U-IN-07 | 타입 오류 (`str` 격자 등) | E005 / INVALID_TYPE | E005 |
 
-- [ ] **U-IN-01** — `tests/boundary/test_u_input.py`
-- [ ] **U-IN-02** — `tests/boundary/test_u_input.py`
-- [ ] **U-IN-03** — `tests/boundary/test_u_input.py`
-- [ ] **U-IN-04** — `tests/boundary/test_u_input.py`
-- [ ] **U-IN-05** — `tests/boundary/test_u_input.py`
-- [ ] **U-IN-06** — `tests/boundary/test_u_input.py`
-- [ ] **U-IN-07** — `tests/boundary/test_u_input.py`
+- [x] **U-IN-01** — `tests/boundary/test_u_input.py` · GREEN PASS
+- [x] **U-IN-02** — `tests/boundary/test_u_input.py` · GREEN PASS
+- [x] **U-IN-03** — `tests/boundary/test_u_input.py` · GREEN PASS
+- [x] **U-IN-04** — `tests/boundary/test_u_input.py` · GREEN PASS
+- [x] **U-IN-05** — `tests/boundary/test_u_input.py` · GREEN PASS
+- [x] **U-IN-06** — `tests/boundary/test_u_input.py` · GREEN PASS
+- [x] **U-IN-07** — `tests/boundary/test_u_input.py` · GREEN PASS
 
 ### 1-B. 출력 계약 (U-OUT-*)
 
@@ -53,8 +53,8 @@
 | U-OUT-01 | 유효 **G1** → 풀이 성공 | `len(result)==6`, 1-index |
 | U-OUT-02 | 출력 필드 순서 | `[r1,c1,n1,r2,c2,n2]` |
 
-- [ ] **U-OUT-01** — `tests/boundary/test_u_output.py`
-- [ ] **U-OUT-02** — `tests/boundary/test_u_output.py`
+- [x] **U-OUT-01** — `tests/boundary/test_u_output.py` · GREEN PASS
+- [x] **U-OUT-02** — `tests/boundary/test_u_output.py` · GREEN PASS
 
 ### 1-C. 흐름 (U-FLOW-*)
 
@@ -64,18 +64,18 @@
 | U-FLOW-02 | `grid=None` | `execute()` **0회** |
 | U-FLOW-03 | E001 격자 | Solver/Finder **미호출** |
 
-- [ ] **U-FLOW-01** — `tests/boundary/test_u_flow.py`
-- [ ] **U-FLOW-02** — `tests/boundary/test_u_flow.py`
-- [ ] **U-FLOW-03** — `tests/boundary/test_u_flow.py`
+- [x] **U-FLOW-01** — `tests/boundary/test_u_flow.py` · GREEN PASS
+- [x] **U-FLOW-02** — `tests/boundary/test_u_flow.py` · GREEN PASS
+- [x] **U-FLOW-03** — `tests/boundary/test_u_flow.py` · GREEN PASS
 
 ### Boundary Fixture
 
-- [ ] `grid_none` — U-IN-01, U-FLOW-02
-- [ ] `grid_3x4` — U-IN-02 (TL-01)
-- [ ] `grid_zero_blanks` — U-IN-03
-- [ ] `grid_one_blank` — U-IN-04 (TL-02)
-- [ ] `grid_duplicate` — U-IN-06 (TL-03)
-- [ ] `grid_g1` — U-OUT-01, U-FLOW-01
+- [x] `grid_none` — U-IN-01, U-FLOW-02
+- [x] `grid_3x4` — U-IN-02 (TL-01)
+- [x] `grid_zero_blanks` — U-IN-03
+- [x] `grid_one_blank` — U-IN-04 (TL-02)
+- [x] `grid_duplicate` — U-IN-06 (TL-03)
+- [x] `grid_g1` — U-OUT-01, U-FLOW-01 (shared `tests/conftest.py`)
 
 ---
 
@@ -94,14 +94,14 @@
 | D-LOC-02 | `find_blank_coords()` | **G1** → `len==2` | INV-02 |
 | D-LOC-03 | `find_blank_coords()` | **G1** → row-major 순서 | I6 |
 
-- [ ] **D-LOC-01** — `tests/entity/test_d_loc_01.py` ← **현재 착수**
-- [ ] **D-LOC-02** — `tests/entity/test_d_loc_01.py`
-- [ ] **D-LOC-03** — `tests/entity/test_d_loc_01.py`
-- [ ] **D-01** — `tests/entity/test_d_grid_size.py`
-- [ ] **D-02** — `tests/entity/test_d_blank_count.py`
-- [ ] **D-03** — `tests/entity/test_d_cell_range.py`
-- [ ] **D-04** — `tests/entity/test_d_no_duplicate.py`
-- [ ] **D-05** — `tests/entity/test_d_magic_constant.py`
+- [x] **D-LOC-01** — `tests/entity/test_d_loc_01.py` · GREEN PASS
+- [x] **D-LOC-02** — `tests/entity/test_d_loc_01.py` · GREEN PASS
+- [x] **D-LOC-03** — `tests/entity/test_d_loc_01.py` · GREEN PASS
+- [x] **D-01** — `tests/entity/test_d_grid_size.py` · GREEN PASS
+- [x] **D-02** — `tests/entity/test_d_blank_count.py` · GREEN PASS
+- [x] **D-03** — `tests/entity/test_d_cell_range.py` · GREEN PASS
+- [x] **D-04** — `tests/entity/test_d_no_duplicate.py` · GREEN PASS
+- [x] **D-05** — `tests/entity/test_d_magic_constant.py` · GREEN PASS
 
 **G1 (1-index 빈칸 (2,2), (3,3)):**
 
@@ -112,9 +112,9 @@
   4  15  14   1
 ```
 
-- [ ] `grid_g1` fixture — D-LOC-01~03
-- [ ] `grid_3x4` — D-01
-- [ ] `grid_one_blank` — D-02
+- [x] `grid_g1` fixture — D-LOC-01~03 (G1 Golden)
+- [x] `grid_3x4` — D-01 (`tests/entity/conftest.py`)
+- [x] `grid_one_blank` — D-02
 
 ---
 
@@ -131,24 +131,24 @@
 | D-VAL-01 | `is_magic_square()` | **G0** 완전 → `True` | R-01~05 |
 | D-VAL-02 | `is_magic_square()` | TL-04 → `False` | INV-05 |
 | D-SOL-01 | `solution()` | **G1** Step A 성공 | I8 |
-| D-SOL-02 | `solution()` | **G1** → `int[6]` 1-index | I6, I8 |
+| D-SOL-02 | `solution()` | **G1** → `[2,2,10,3,3,7]` 1-index | I6, I8 |
 | D-10 | `is_valid_magic_square()` | 채운 G1 → 10선 PASS | INV-05 |
 
-- [ ] **D-06** — `tests/control/test_d_line_sums.py`
-- [ ] **D-06b** — `tests/control/test_d_line_sums.py`
-- [ ] **D-07** — `tests/control/test_d_find_blanks.py`
-- [ ] **D-MIS-01** — `tests/control/test_d_missing_numbers.py`
-- [ ] **D-VAL-01** — `tests/control/test_d_valid_magic_square.py`
-- [ ] **D-VAL-02** — `tests/control/test_d_valid_magic_square.py`
-- [ ] **D-SOL-01** — `tests/control/test_d_solver_combination.py`
-- [ ] **D-SOL-02** — `tests/control/test_d_solver_combination.py`
-- [ ] **D-10** — `tests/control/test_d_valid_magic_square.py`
+- [x] **D-06** — `tests/control/test_d_line_sums.py` · GREEN PASS
+- [x] **D-06b** — `tests/control/test_d_line_sums.py` · GREEN PASS
+- [x] **D-07** — `tests/control/test_d_find_blanks.py` · GREEN PASS
+- [x] **D-MIS-01** — `tests/control/test_d_missing_numbers.py` · GREEN PASS
+- [x] **D-VAL-01** — `tests/control/test_d_valid_magic_square.py` · GREEN PASS
+- [x] **D-VAL-02** — `tests/control/test_d_valid_magic_square.py` · GREEN PASS
+- [x] **D-SOL-01** — `tests/control/test_d_solver_combination.py` · GREEN PASS
+- [x] **D-SOL-02** — `tests/control/test_d_solver_combination.py` · GREEN PASS
+- [x] **D-10** — `tests/control/test_d_valid_magic_square.py` · GREEN PASS
 
 ### Control Fixture
 
-- [ ] `grid_g0` — 완전 마방진 (D-06, D-VAL-01)
-- [ ] `grid_g1` — 부분 격자 (D-07, D-MIS-01, D-SOL-*)
-- [ ] `grid_tl04` — 행만 34, 대각 불일치 (D-06b, D-VAL-02)
+- [x] `grid_g0` — 완전 마방진 (D-06, D-VAL-01)
+- [x] `grid_g1` — 부분 격자 (D-07, D-MIS-01, D-SOL-*)
+- [x] `grid_tl04` — 행 34·대각 FAIL (D-06b, D-VAL-02)
 
 ---
 
@@ -168,13 +168,10 @@
 
 ## 5. RED 진행 순서 (권장)
 
-1. - [ ] Logic **D-LOC-01~03** — `tests/entity/test_d_loc_01.py`
-2. - [ ] Logic **D-01~05** — `tests/entity/test_d_*.py`
-3. - [ ] Logic **D-MIS-01, D-VAL-01** — `tests/control/`
-4. - [ ] Logic **D-SOL-01~02, D-10** — `tests/control/`
-5. - [ ] Boundary **U-IN-01~07** — `tests/boundary/test_u_input.py`
-6. - [ ] Boundary **U-FLOW-01~03** — `tests/boundary/test_u_flow.py`
-7. - [ ] Boundary **U-OUT-01~02** — `tests/boundary/test_u_output.py`
+1. - [x] Logic **D-LOC-01~03** — `tests/entity/test_d_loc_01.py` · GREEN PASS
+2. - [x] Logic **D-01~05** — `tests/entity/test_d_*.py` · GREEN PASS
+3. - [x] Logic **D-06~D-10, D-MIS-01, D-SOL-01~02** — `tests/control/` · GREEN PASS
+4. - [x] Boundary **U-IN-01~07, U-FLOW, U-OUT** — `tests/boundary/` · **G1 Golden GREEN PASS**
 
 ---
 

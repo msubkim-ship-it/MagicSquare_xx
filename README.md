@@ -29,7 +29,7 @@ Mom Test → 문제 정의 → Harness · `.cursorrules` → Dual-Track TDD(RED�
 | **도메인** | 4×4 Magic Square (마방진), 빈칸 `0` × 2, 1~16 |
 | **방법론** | Mom Test → Rule/PRD → ECB + Dual-Track TDD |
 | **페르소나** | 4×4 부분 마방진을 손·코드로 다루는 학습자 |
-| **현재 단계** | D-LOC-01 **GREEN** 완료 → D-LOC-02~03 RED 예정 |
+| **현재 단계** | **G1 Golden Master** Logic+Boundary GREEN PASS (29 tests) |
 
 ### 예시 격자
 
@@ -139,13 +139,15 @@ MagicSquare_xx/
 │   ├── 03.work_progress_report.md   ← 작업 진행 통합
 │   ├── 04.red_design_session_report.md ← RED 설계 세션
 │   ├── 05.red_skeleton_session_report.md ← RED 스켈레톤 (D-LOC-01)
-│   └── 06.green_minimal_session_report.md ← GREEN D-LOC-01
+│   ├── 06.green_minimal_session_report.md ← GREEN D-LOC-01
+│   └── 07.golden_master_session_report.md ← G1 Golden Master GREEN
 ├── Prompting/
 │   ├── 01~02  Mom Test 프롬프트
 │   ├── 03.work_progress_transcript.md
 │   ├── 04.red_design_transcript.md
 │   ├── 05.red_skeleton_transcript.md
-│   └── 06.green_minimal_transcript.md
+│   ├── 06.green_minimal_transcript.md
+│   └── 07.golden_master_transcript.md
 ├── src/entity|control|boundary/
 └── tests/entity|control|boundary/
 ```
@@ -166,11 +168,15 @@ pytest tests/control -v             # Logic — control
 pytest tests/boundary -v            # UI — boundary
 ```
 
-현재: **1 test** — D-LOC-01 GREEN PASSED
+현재: **29 tests** — G1 Golden Master 경로 GREEN PASSED
 
 ```powershell
-python -m pytest tests/entity/test_d_loc_01.py -v
+python -m pytest tests/ -v
+python -m pytest tests/control/test_d_solver_combination.py::test_d_sol_01_step_a_success -v
+python -m pytest tests/boundary/test_u_output.py -v
 ```
+
+**G1 solution (Step A):** `[2, 2, 10, 3, 3, 7]` — 빈칸 (2,2)·(3,3), 누락 7·10
 
 브랜치: `main` · `staging` · `spec` · `red`
 
@@ -200,6 +206,7 @@ python -m pytest tests/entity/test_d_loc_01.py -v
 | 04 | `04.red_design_session_report.md` | `04.red_design_transcript.md` |
 | 05 | `05.red_skeleton_session_report.md` | `05.red_skeleton_transcript.md` |
 | 06 | `06.green_minimal_session_report.md` | `06.green_minimal_transcript.md` |
+| 07 | `07.golden_master_session_report.md` | `07.golden_master_transcript.md` |
 | [`.cursor/skills/magic-square-tdd/SKILL.md`](.cursor/skills/magic-square-tdd/SKILL.md) | Dual-Track TDD 절차 |
 | [`.cursor/commands/tdd-red.md`](.cursor/commands/tdd-red.md) | RED Command |
 | [`.cursor/commands/review-ecb.md`](.cursor/commands/review-ecb.md) | ECB 리뷰 Command (read-only) |
@@ -207,10 +214,12 @@ python -m pytest tests/entity/test_d_loc_01.py -v
 | [`Report/04.red_design_session_report.md`](Report/04.red_design_session_report.md) | **RED 설계 세션** — D-LOC-01 · TODO_RED |
 | [`Report/05.red_skeleton_session_report.md`](Report/05.red_skeleton_session_report.md) | **RED 스켈레톤** — D-LOC-01 pytest RED |
 | [`Report/06.green_minimal_session_report.md`](Report/06.green_minimal_session_report.md) | **GREEN minimal** — `find_blank_coords` |
+| [`Report/07.golden_master_session_report.md`](Report/07.golden_master_session_report.md) | **G1 Golden Master** — 29 tests GREEN |
 | [`Prompting/03.work_progress_transcript.md`](Prompting/03.work_progress_transcript.md) | 작업 진행 Transcript (통합 요약) |
 | [`Prompting/04.red_design_transcript.md`](Prompting/04.red_design_transcript.md) | RED 설계 Transcript |
 | [`Prompting/05.red_skeleton_transcript.md`](Prompting/05.red_skeleton_transcript.md) | RED 스켈레톤 Transcript |
 | [`Prompting/06.green_minimal_transcript.md`](Prompting/06.green_minimal_transcript.md) | GREEN minimal Transcript |
+| [`Prompting/07.golden_master_transcript.md`](Prompting/07.golden_master_transcript.md) | G1 Golden Master Transcript |
 
 ---
 
@@ -225,8 +234,10 @@ python -m pytest tests/entity/test_d_loc_01.py -v
 | [`Report/03`](Report/03.work_progress_report.md) 작업 보고서 | ✅ |
 | [`docs/TODO_RED.md`](docs/TODO_RED.md) RED 설계·체크리스트 | ✅ |
 | RED D-LOC-01 스켈레톤 | ✅ |
-| GREEN · `find_blank_coords` (D-LOC-01) | ✅ |
-| RED D-LOC-02~03 | ⬜ |
+| G1 Golden — Logic entity (D-LOC, D-01~05) | ✅ |
+| G1 Golden — Logic control (D-06~10, D-MIS, D-SOL) | ✅ |
+| G1 Golden — Boundary (U-IN, U-OUT, U-FLOW) | ✅ |
+| REFACTOR · SSOT 통합 (`GRID_SIZE` 등) | ⬜ |
 
 상세 타임라인: [`Report/03.work_progress_report.md`](Report/03.work_progress_report.md)
 
@@ -236,11 +247,9 @@ python -m pytest tests/entity/test_d_loc_01.py -v
 
 진행 순서는 [`docs/TODO_RED.md`](docs/TODO_RED.md) §5 참조.
 
-1. RED — D-LOC-02~03 (`tests/entity/test_d_loc_01.py`)
-2. Logic RED — D-01~05 (entity) → D-06~D-10 (control)
-3. **Boundary Track** RED — U-IN / U-FLOW / U-OUT (`tests/boundary/`)
-4. GREEN: Entity → Control → Boundary
-5. `.cursorrules` v0.2 (리뷰 P0 반영)
+1. REFACTOR — `boundary`/`entity` constants 통합, 호출 카운터 정리
+2. `.cursorrules` v0.2 (리뷰 P0 반영)
+3. 추가 시나리오 RED (TL-02~04 boundary·control 회귀 강화)
 
 ---
 
