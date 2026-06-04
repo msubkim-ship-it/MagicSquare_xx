@@ -1,0 +1,74 @@
+# MagicSquare_xx — Cursor AI Rules (초안)
+
+project: MagicSquare_xx
+language: ko
+stack: Python 3.10+, pytest, ECB, Dual-Track TDD
+
+## 도메인
+
+- 4×4 부분 마방진: `int[4][4]`, 빈칸 `0` **정확히 2개**, 나머지 **1~16** 중복 없음.
+- **10선**(행4+열4+대각2) 합 = Magic Constant. 값은 `MagicConstant` SSOT에서만 유도 — **`34`·`16` 리터럴 산재 금지**.
+- 출력: `int[6]` = `[r1, c1, n1, r2, c2, n2]` — 좌표 **1-index**, row-major 첫 빈칸·둘째 빈칸 순.
+- 조합 규칙: 작은 누락 수→첫 빈칸, 큰 수→둘째 빈칸 시도; 실패 시 역순.
+
+### 오류 코드 (Boundary 전용)
+
+| 코드 | 조건 |
+|------|------|
+| E001 | 격자 크기 ≠ 4×4 |
+| E002 | 빈칸(`0`) 개수 ≠ 2 |
+| E003 | 비제로 값 범위 위반 (1~16 밖) |
+| E004 | 비제로 값 중복 |
+| E005 | 입력 타입·형식 오류 |
+| E006 | 유효 입력이나 해 없음 |
+| E007 | 출력·포맷 계약 위반 |
+
+- **E001~E007** 발생·변환·메시지는 **boundary** 책임.
+- **entity**는 E001~E005 **처리·raise·catch 금지** — 도메인 불변식만 표현.
+
+## 아키텍처 (ECB)
+
+```
+boundary → control → entity   (단방향만 허용)
+```
+
+| Layer | 경로 | 책임 |
+|-------|------|------|
+| entity | `src/entity/` | Grid, MagicConstant, 도메인 불변식 |
+| control | `src/control/` | Validator, Finder, Solver, 조합 |
+| boundary | `src/boundary/` | 입력 파싱, E001~E007, 출력 포맷 |
+
+- **entity**에서 `boundary`·`control` import **금지**.
+- **control**에서 `boundary` import **금지**.
+
+## Dual-Track TDD
+
+| Track | Layer | 테스트 | Mock |
+|-------|-------|--------|------|
+| **Logic** | entity, control | `tests/entity/`, `tests/control/` | **Domain Mock 금지** |
+| **UI** | boundary | `tests/boundary/` | **Mock 허용** (입출력·CLI) |
+
+- 테스트 ID: **D-*** (Logic), **U-*** (UI).
+- 파일명: `test_d_*.py`, `test_u_*.py`. docstring/주석에 ID·INV·Rule 매핑.
+
+## TDD 사이클
+
+1. **RED** — 실패 테스트 먼저 (assert 필수).
+2. **GREEN** — 최소 구현으로 통과.
+3. **REFACTOR** — 테스트 GREEN 유지하며 정리.
+
+**금지:** assert 완화·삭제, `@pytest.mark.skip`, `xfail`, 구현 선행, RED 없는 GREEN.
+
+## AI 행동
+
+- **한국어**로 응답. TDD 작업 시 맨 앞에 선언: `Phase: RED|GREEN|REFACTOR` / `Layer: entity|control|boundary` / `Track: Logic|UI`.
+- 한 턴에 **하나의 Phase·하나의 테스트 묶음**만.
+- `.cursorrules`·PRD·Rule 위반 코드 제안 금지.
+- **`git commit`·`git push`는 사용자가 명시 요청할 때만.**
+
+## 디렉터리
+
+```
+src/entity/  src/control/  src/boundary/
+tests/entity/  tests/control/  tests/boundary/
+```
