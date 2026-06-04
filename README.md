@@ -29,7 +29,7 @@ Mom Test → 문제 정의 → Harness · `.cursorrules` → Dual-Track TDD(RED�
 | **도메인** | 4×4 Magic Square (마방진), 빈칸 `0` × 2, 1~16 |
 | **방법론** | Mom Test → Rule/PRD → ECB + Dual-Track TDD |
 | **페르소나** | 4×4 부분 마방진을 손·코드로 다루는 학습자 |
-| **현재 단계** | Harness · `.cursorrules` 초안 완료 → RED 테스트 작성 예정 |
+| **현재 단계** | Harness · `.cursorrules` · Skill/Command 완료 → RED 테스트 작성 예정 |
 
 ### 예시 격자
 
@@ -119,26 +119,23 @@ TDD: **RED → GREEN → REFACTOR** (skip · xfail · assert 완화 금지)
 ```
 MagicSquare_xx/
 ├── README.md
-├── .cursorrules              ← Cursor AI 규칙 (초안)
-├── pyproject.toml            ← pytest Harness
+├── .cursorrules
+├── pyproject.toml
 ├── .gitignore
-├── docs/
-│   └── PRD.md
+├── .cursor/
+│   ├── skills/magic-square-tdd/   ← SKILL.md, reference.md (D-*)
+│   └── commands/
+│       ├── tdd-red.md
+│       └── review-ecb.md
+├── docs/PRD.md
 ├── Report/
 │   ├── 01.MagicSquare_ProblemDefinition_Report.md
 │   ├── 01.mom_test_interview_report.md
-│   └── 02.project_introduction_report.md
-├── Prompt/
-│   ├── 01.mom_test_step1_interview.md
-│   └── 02.mom_test_workbook_template.md
-├── src/
-│   ├── entity/__init__.py
-│   ├── control/__init__.py
-│   └── boundary/__init__.py
-└── tests/
-    ├── entity/__init__.py
-    ├── control/__init__.py
-    └── boundary/__init__.py
+│   ├── 02.project_introduction_report.md
+│   └── 03.work_progress_report.md   ← 작업 진행 보고서
+├── Prompt/01~02
+├── src/entity|control|boundary/
+└── tests/entity|control|boundary/
 ```
 
 ---
@@ -169,6 +166,10 @@ pytest          # 현재: 0 tests collected (Harness 골격만)
 | [`Report/02.project_introduction_report.md`](Report/02.project_introduction_report.md) | 프로젝트 소개 · ECB 초안 |
 | [`Prompt/01.mom_test_step1_interview.md`](Prompt/01.mom_test_step1_interview.md) | Mom Test 인터뷰 프롬프트 |
 | [`Prompt/02.mom_test_workbook_template.md`](Prompt/02.mom_test_workbook_template.md) | Mom Test 워크북 템플릿 |
+| [`.cursor/skills/magic-square-tdd/SKILL.md`](.cursor/skills/magic-square-tdd/SKILL.md) | Dual-Track TDD 절차 |
+| [`.cursor/commands/tdd-red.md`](.cursor/commands/tdd-red.md) | RED Command |
+| [`.cursor/commands/review-ecb.md`](.cursor/commands/review-ecb.md) | ECB 리뷰 Command (read-only) |
+| [`Report/03.work_progress_report.md`](Report/03.work_progress_report.md) | **작업 진행 보고서** (통합) |
 
 ---
 
@@ -176,21 +177,23 @@ pytest          # 현재: 0 tests collected (Harness 골격만)
 
 | 영역 | 상태 |
 |------|------|
-| Mom Test 인터뷰 | ✅ (채점 8/10) |
-| 문제 정의 · PRD v0.1 | ✅ |
-| pytest Harness (`src/` · `tests/`) | ✅ |
-| `.cursorrules` 초안 | ✅ |
-| RED 테스트 (`test_d_*` / `test_u_*`) | ⬜ |
-| Entity / Control / Boundary 구현 | ⬜ |
+| Mom Test · 문제 정의 · PRD | ✅ |
+| pytest Harness | ✅ |
+| `.cursorrules` | ✅ 초안 |
+| Skill · Commands (`tdd-red`, `review-ecb`) | ✅ (로컬, push 전) |
+| [`Report/03`](Report/03.work_progress_report.md) 작업 보고서 | ✅ |
+| RED 테스트 · `src/` 구현 | ⬜ |
+
+상세 타임라인: [`Report/03.work_progress_report.md`](Report/03.work_progress_report.md)
 
 ---
 
 ## 9. 다음 단계
 
-1. Mom Test Q10 보완 — *"입력이 이상할 때 뭘 먼저 확인했어?"*
-2. **Logic Track** RED: `tests/entity/test_d_*.py` (D-*)
-3. **UI Track** RED: `tests/boundary/test_u_*.py` (U-*, E001~E003)
-4. GREEN: Entity → Control → Boundary 순 구현
+1. `.cursor/` · `Report/03` 커밋·push
+2. **Logic Track** RED — `D-01` (`tests/entity/test_d_*.py`)
+3. `.cursorrules` v0.2 (리뷰 P0 반영)
+4. GREEN: Entity → Control → Boundary
 
 ---
 

@@ -3,7 +3,7 @@
 **프로젝트:** MagicSquare_xx  
 **버전:** 0.1 (초안)  
 **작성일:** 2026-06-04  
-**기반:** Mom Test · MagicSquare_1004 세션 3 워크북  
+**기반:** Mom Test · MagicSquare_xx 세션 3 워크북  
 **참조:** `Report/01.MagicSquare_ProblemDefinition_Report.md`
 
 ---
