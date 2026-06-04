@@ -225,8 +225,8 @@ ResultDisplay     Solver               SolveResult
 | `Report/01.MagicSquare_ProblemDefinition_Report.md` | Mom Test · Rule · Command · Test Loop |
 | `Report/01.mom_test_interview_report.md` | Mom Test 인터뷰 원본 |
 | `Report/02.project_introduction_report.md` | 프로젝트 소개 · ECB 초안 |
-| `Prompt/01.mom_test_step1_interview.md` | Mom Test 인터뷰 프롬프트 |
-| `Prompt/02.mom_test_workbook_template.md` | Mom Test 워크북 템플릿 |
+| `Prompting/01.mom_test_step1_interview.md` | Mom Test 인터뷰 프롬프트 |
+| `Prompting/02.mom_test_workbook_template.md` | Mom Test 워크북 템플릿 |
 
 ---
 

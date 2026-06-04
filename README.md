@@ -29,7 +29,7 @@ Mom Test → 문제 정의 → Harness · `.cursorrules` → Dual-Track TDD(RED�
 | **도메인** | 4×4 Magic Square (마방진), 빈칸 `0` × 2, 1~16 |
 | **방법론** | Mom Test → Rule/PRD → ECB + Dual-Track TDD |
 | **페르소나** | 4×4 부분 마방진을 손·코드로 다루는 학습자 |
-| **현재 단계** | Harness · `.cursorrules` · Skill/Command 완료 → RED 테스트 작성 예정 |
+| **현재 단계** | D-LOC-01 **GREEN** 완료 → D-LOC-02~03 RED 예정 |
 
 ### 예시 격자
 
@@ -112,6 +112,8 @@ boundary → control → entity
 
 TDD: **RED → GREEN → REFACTOR** (skip · xfail · assert 완화 금지)
 
+RED Test ID·진행 체크: [`docs/TODO_RED.md`](docs/TODO_RED.md) · Logic ID 상세: [`.cursor/skills/magic-square-tdd/reference.md`](.cursor/skills/magic-square-tdd/reference.md)
+
 ---
 
 ## 5. 디렉터리 구조
@@ -127,13 +129,23 @@ MagicSquare_xx/
 │   └── commands/
 │       ├── tdd-red.md
 │       └── review-ecb.md
-├── docs/PRD.md
+├── docs/
+│   ├── PRD.md
+│   └── TODO_RED.md              ← Dual-Track RED 체크리스트
 ├── Report/
 │   ├── 01.MagicSquare_ProblemDefinition_Report.md
 │   ├── 01.mom_test_interview_report.md
 │   ├── 02.project_introduction_report.md
-│   └── 03.work_progress_report.md   ← 작업 진행 보고서
-├── Prompt/01~02
+│   ├── 03.work_progress_report.md   ← 작업 진행 통합
+│   ├── 04.red_design_session_report.md ← RED 설계 세션
+│   ├── 05.red_skeleton_session_report.md ← RED 스켈레톤 (D-LOC-01)
+│   └── 06.green_minimal_session_report.md ← GREEN D-LOC-01
+├── Prompting/
+│   ├── 01~02  Mom Test 프롬프트
+│   ├── 03.work_progress_transcript.md
+│   ├── 04.red_design_transcript.md
+│   ├── 05.red_skeleton_transcript.md
+│   └── 06.green_minimal_transcript.md
 ├── src/entity|control|boundary/
 └── tests/entity|control|boundary/
 ```
@@ -148,10 +160,19 @@ MagicSquare_xx/
 git clone https://github.com/msubkim-ship-it/MagicSquare_xx.git
 cd MagicSquare_xx
 pip install -e ".[dev]"
-pytest          # 현재: 0 tests collected (Harness 골격만)
+pytest                              # 전체
+pytest tests/entity -v              # Logic — entity
+pytest tests/control -v             # Logic — control
+pytest tests/boundary -v            # UI — boundary
 ```
 
-브랜치: `main` · `staging` · `spec` (동기화 유지)
+현재: **1 test** — D-LOC-01 GREEN PASSED
+
+```powershell
+python -m pytest tests/entity/test_d_loc_01.py -v
+```
+
+브랜치: `main` · `staging` · `spec` · `red`
 
 ---
 
@@ -161,15 +182,35 @@ pytest          # 현재: 0 tests collected (Harness 골격만)
 |------|------|
 | [`.cursorrules`](.cursorrules) | 도메인 · ECB · Dual-Track · TDD · AI 행동 규칙 |
 | [`docs/PRD.md`](docs/PRD.md) | Rule, R-G-I-O, 입출력 계약, DoD |
+| [`docs/TODO_RED.md`](docs/TODO_RED.md) | **Dual-Track RED 체크리스트** (U-* · D-*) |
 | [`Report/01.MagicSquare_ProblemDefinition_Report.md`](Report/01.MagicSquare_ProblemDefinition_Report.md) | Mom Test + Rule/Command/Test Loop |
 | [`Report/01.mom_test_interview_report.md`](Report/01.mom_test_interview_report.md) | Mom Test 인터뷰 원본 |
 | [`Report/02.project_introduction_report.md`](Report/02.project_introduction_report.md) | 프로젝트 소개 · ECB 초안 |
-| [`Prompt/01.mom_test_step1_interview.md`](Prompt/01.mom_test_step1_interview.md) | Mom Test 인터뷰 프롬프트 |
-| [`Prompt/02.mom_test_workbook_template.md`](Prompt/02.mom_test_workbook_template.md) | Mom Test 워크북 템플릿 |
+| [`Prompting/01.mom_test_step1_interview.md`](Prompting/01.mom_test_step1_interview.md) | Mom Test 인터뷰 프롬프트 |
+| [`Prompting/02.mom_test_workbook_template.md`](Prompting/02.mom_test_workbook_template.md) | Mom Test 워크북 템플릿 (→ Report/01 문제 정의) |
+
+### Report ↔ Prompting (번호·이름 짝)
+
+| # | Report | Prompting |
+|---|--------|-----------|
+| 01 | `01.mom_test_interview_report.md` | `01.mom_test_step1_interview.md` |
+| 01 | `01.MagicSquare_ProblemDefinition_Report.md` | `02.mom_test_workbook_template.md` |
+| 02 | `02.project_introduction_report.md` | — |
+| 03 | `03.work_progress_report.md` | `03.work_progress_transcript.md` |
+| 04 | `04.red_design_session_report.md` | `04.red_design_transcript.md` |
+| 05 | `05.red_skeleton_session_report.md` | `05.red_skeleton_transcript.md` |
+| 06 | `06.green_minimal_session_report.md` | `06.green_minimal_transcript.md` |
 | [`.cursor/skills/magic-square-tdd/SKILL.md`](.cursor/skills/magic-square-tdd/SKILL.md) | Dual-Track TDD 절차 |
 | [`.cursor/commands/tdd-red.md`](.cursor/commands/tdd-red.md) | RED Command |
 | [`.cursor/commands/review-ecb.md`](.cursor/commands/review-ecb.md) | ECB 리뷰 Command (read-only) |
-| [`Report/03.work_progress_report.md`](Report/03.work_progress_report.md) | **작업 진행 보고서** (통합) |
+| [`Report/03.work_progress_report.md`](Report/03.work_progress_report.md) | 작업 진행 보고서 (통합) |
+| [`Report/04.red_design_session_report.md`](Report/04.red_design_session_report.md) | **RED 설계 세션** — D-LOC-01 · TODO_RED |
+| [`Report/05.red_skeleton_session_report.md`](Report/05.red_skeleton_session_report.md) | **RED 스켈레톤** — D-LOC-01 pytest RED |
+| [`Report/06.green_minimal_session_report.md`](Report/06.green_minimal_session_report.md) | **GREEN minimal** — `find_blank_coords` |
+| [`Prompting/03.work_progress_transcript.md`](Prompting/03.work_progress_transcript.md) | 작업 진행 Transcript (통합 요약) |
+| [`Prompting/04.red_design_transcript.md`](Prompting/04.red_design_transcript.md) | RED 설계 Transcript |
+| [`Prompting/05.red_skeleton_transcript.md`](Prompting/05.red_skeleton_transcript.md) | RED 스켈레톤 Transcript |
+| [`Prompting/06.green_minimal_transcript.md`](Prompting/06.green_minimal_transcript.md) | GREEN minimal Transcript |
 
 ---
 
@@ -180,9 +221,12 @@ pytest          # 현재: 0 tests collected (Harness 골격만)
 | Mom Test · 문제 정의 · PRD | ✅ |
 | pytest Harness | ✅ |
 | `.cursorrules` | ✅ 초안 |
-| Skill · Commands (`tdd-red`, `review-ecb`) | ✅ (로컬, push 전) |
+| Skill · Commands (`tdd-red`, `review-ecb`) | ✅ |
 | [`Report/03`](Report/03.work_progress_report.md) 작업 보고서 | ✅ |
-| RED 테스트 · `src/` 구현 | ⬜ |
+| [`docs/TODO_RED.md`](docs/TODO_RED.md) RED 설계·체크리스트 | ✅ |
+| RED D-LOC-01 스켈레톤 | ✅ |
+| GREEN · `find_blank_coords` (D-LOC-01) | ✅ |
+| RED D-LOC-02~03 | ⬜ |
 
 상세 타임라인: [`Report/03.work_progress_report.md`](Report/03.work_progress_report.md)
 
@@ -190,10 +234,13 @@ pytest          # 현재: 0 tests collected (Harness 골격만)
 
 ## 9. 다음 단계
 
-1. `.cursor/` · `Report/03` 커밋·push
-2. **Logic Track** RED — `D-01` (`tests/entity/test_d_*.py`)
-3. `.cursorrules` v0.2 (리뷰 P0 반영)
+진행 순서는 [`docs/TODO_RED.md`](docs/TODO_RED.md) §5 참조.
+
+1. RED — D-LOC-02~03 (`tests/entity/test_d_loc_01.py`)
+2. Logic RED — D-01~05 (entity) → D-06~D-10 (control)
+3. **Boundary Track** RED — U-IN / U-FLOW / U-OUT (`tests/boundary/`)
 4. GREEN: Entity → Control → Boundary
+5. `.cursorrules` v0.2 (리뷰 P0 반영)
 
 ---
 
